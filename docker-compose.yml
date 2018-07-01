@@ -1,0 +1,40 @@
+version: '3'
+services:
+  master:
+    image: darxkies/lizardfs:0.2.0
+    command: master
+    restart: on-failure
+    network_mode: host
+    volumes:
+        - ./config/:/etc/lizardfs
+        - ./data/:/var/lib/lizardfs
+  metalogger:
+    depends_on: 
+    - master
+    image: darxkies/lizardfs:0.2.0
+    command: metalogger
+    restart: on-failure
+    network_mode: host
+    volumes:
+        - ./config/:/etc/lizardfs
+        - ./data/:/var/lib/lizardfs
+  chunkserver:
+    depends_on: 
+    - master
+    image: darxkies/lizardfs:0.2.0
+    command: chunkserver
+    restart: on-failure
+    network_mode: host
+    volumes:
+        - ./config/:/etc/lizardfs
+        - ./data/:/var/lib/lizardfs
+  cgiserver:
+    depends_on: 
+    - master
+    image: darxkies/lizardfs:0.2.0
+    command: cgiserver
+    restart: on-failure
+    network_mode: host
+    volumes:
+        - ./config/:/etc/lizardfs
+        - ./data/:/var/lib/lizardfs
